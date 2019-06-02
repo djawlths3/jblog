@@ -1,0 +1,111 @@
+
+-- 포스트
+DROP TABLE IF EXISTS `post` RESTRICT;
+
+-- 사용자
+DROP TABLE IF EXISTS `user` RESTRICT;
+
+-- 카테고리
+DROP TABLE IF EXISTS `category` RESTRICT;
+
+-- 블로그
+DROP TABLE IF EXISTS `blog` RESTRICT;
+
+-- 포스트
+CREATE TABLE `post` (
+	`no`          INT UNSIGNED NOT NULL COMMENT '번호', -- 번호
+	`title`       VARCHAR(50)  NOT NULL COMMENT '제목', -- 제목
+	`content`     TEXT         NOT NULL COMMENT '내용', -- 내용
+	`reg_date`    DATETIME     NOT NULL COMMENT '작성일', -- 작성일
+	`category_no` INT UNSIGNED NOT NULL COMMENT '카테고리번호' -- 카테고리번호
+)
+COMMENT '포스트';
+
+-- 포스트
+ALTER TABLE `post`
+	ADD CONSTRAINT `PK_post` -- 포스트 기본키
+		PRIMARY KEY (
+			`no` -- 번호
+		);
+
+ALTER TABLE `post`
+	MODIFY COLUMN `no` INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '번호';
+
+-- 사용자
+CREATE TABLE `user` (
+	`id`       VARCHAR(20) NOT NULL COMMENT '아이디', -- 아이디
+	`name`     VARCHAR(10) NOT NULL COMMENT '이름', -- 이름
+	`pw`       VARCHAR(20) NOT NULL COMMENT '비밀번호', -- 비밀번호
+	`reg_date` DATETIME    NOT NULL COMMENT '가입일' -- 가입일
+)
+COMMENT '사용자';
+
+-- 사용자
+ALTER TABLE `user`
+	ADD CONSTRAINT `PK_user` -- 사용자 기본키
+		PRIMARY KEY (
+			`id` -- 아이디
+		);
+
+-- 카테고리
+CREATE TABLE `category` (
+	`no`          INT UNSIGNED  NOT NULL COMMENT '번호', -- 번호
+	`name`        VARCHAR(20)   NOT NULL COMMENT '이름', -- 이름
+	`explanation` VARCHAR(1000) NULL     COMMENT '설명', -- 설명
+	`reg_date`    DATETIME      NOT NULL COMMENT '등록일', -- 등록일
+	`blog_id`     VARCHAR(20)   NOT NULL COMMENT '블로그아이디', -- 블로그아이디
+	`post_count`  INT UNSIGNED  NOT NULL DEFAULT 0 COMMENT '포스트갯수' -- 포스트갯수
+)
+COMMENT '카테고리';
+
+-- 카테고리
+ALTER TABLE `category`
+	ADD CONSTRAINT `PK_category` -- 카테고리 기본키
+		PRIMARY KEY (
+			`no` -- 번호
+		);
+
+-- 블로그
+CREATE TABLE `blog` (
+	`blog_id` VARCHAR(20)   NOT NULL COMMENT '블로그아이디', -- 블로그아이디
+	`title`   VARCHAR(100)  NULL     COMMENT '타이틀', -- 타이틀
+	`logo`    VARCHAR(1000) NULL     COMMENT '로그' -- 로그
+)
+COMMENT '블로그';
+
+-- 블로그
+ALTER TABLE `blog`
+	ADD CONSTRAINT `PK_blog` -- 블로그 기본키
+		PRIMARY KEY (
+			`blog_id` -- 블로그아이디
+		);
+
+-- 포스트
+ALTER TABLE `post`
+	ADD CONSTRAINT `FK_category_TO_post` -- 카테고리 -> 포스트
+		FOREIGN KEY (
+			`category_no` -- 카테고리번호
+		)
+		REFERENCES `category` ( -- 카테고리
+			`no` -- 번호
+		) ON DELETE CASCADE;
+
+-- 카테고리
+ALTER TABLE `category`
+	ADD CONSTRAINT `FK_blog_TO_category` -- 블로그 -> 카테고리
+		FOREIGN KEY (
+			`blog_id` -- 블로그아이디
+		)
+		REFERENCES `blog` ( -- 블로그
+			`blog_id` -- 블로그아이디
+		);
+
+-- 블로그
+ALTER TABLE `blog`
+	ADD CONSTRAINT `FK_user_TO_blog` -- 사용자 -> 블로그
+		FOREIGN KEY (
+			`blog_id` -- 블로그아이디
+		)
+		REFERENCES `user` ( -- 사용자
+			`id` -- 아이디
+		);
