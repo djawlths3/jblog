@@ -24,5 +24,10 @@ public class UserDao {
 	public UserVo login(UserVo vo) {		
 		return sqlSession.selectOne("user.login",vo);
 	}
+	
+	public Boolean checkId(String id) {		
+		int ck =  sqlSession.selectOne("user.check",id);
+		return ck > 0;
+	}
 }
 	
