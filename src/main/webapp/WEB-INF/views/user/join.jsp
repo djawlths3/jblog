@@ -16,29 +16,25 @@
 <body>
 	<div class="center-content">
 		<c:import url="/WEB-INF/views/include/header.jsp"></c:import>
-		
-		<form:form modelAttribute="userVo" class="join-form" id="join-form" name="joinForm" method="post"
-					action="${pageContext.servletContext.contextPath}/user/join">
+		<form class="join-form" id="join-form" method="post" action="${pageContext.servletContext.contextPath}/user/join">
 			<label class="block-label" for="name">이름</label>
-			<form:input id ='name' path="name"/><p id='nameMsg' class='err-msg'>이름을 입력해주세요</p>
+			<input id="name"name="name" type="text" value="">
+			<p id='nameMsg' class='err-msg'>이름을 입력해주세요</p>
 			<label class="block-label" for="id">아이디</label>
-			<form:input id ='id' path="id"/>			
+			<input id="id" name="id" type="text"> 
 			<input id="btn-checkemail" type="button" value="id 중복체크">
 			<img id="img-checkemail" style="display: none;" src="${pageContext.servletContext.contextPath}/assets/images/check.png">
 			<p id='idMsg' class='err-msg'>아이디 길이는 2~10 사이입니다</p>
 			<label class="block-label" for="password">패스워드</label>
-			<form:input path="pw" id="pw" name="pw" type="password"/>
-			<p id='pwMsg' class='err-msg'>비밀번호를 입력해주세요</p>	
-			<!-- 
+			<input id="pw" name="pw" type="password" />
+			<p id='pwMsg' class='err-msg'>비밀번호를 입력해주세요</p>		
 			<fieldset>
 				<legend>약관동의</legend>
 				<input id="agree-prov" type="checkbox" name="agreeProv" value="y">
 				<label class="l-float">서비스 약관에 동의합니다.</label>
 			</fieldset>
- 			-->
-			<input id='submitBtn' type="submit" value="가입하기" disabled="">
-			
-			</form:form>
+			<input type="submit" value="가입하기">
+		</form>
 
 	</div>
 </body>

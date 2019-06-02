@@ -36,7 +36,6 @@ public class UserController {
 	@RequestMapping( value="/join" , method=RequestMethod.POST)
 	public String join(@ModelAttribute @Valid UserVo userVo,BindingResult result, Model model) {	
 		if(userService.valiCheck(result)) {
-			System.out.println(result.getModel());
 			model.addAllAttributes(result.getModel());
 			return "user/join";
 		}
