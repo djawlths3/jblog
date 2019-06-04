@@ -28,9 +28,6 @@ import com.cafe24.jblog.vo.UserVo;
 public class BlogService {
 	@Autowired
 	BlogDao blogDao;
-	//private static final String SAVE_PATH = "/project/jblog/src/main/webapp/assets/images/logo";
-//	private static final String SAVE_PATH = "/jblogImg";
-//	private static final String URL = "/assets/images/logo";
 	private static final String SAVE_PATH = "/jblogImg";
 	private static final String URL = "/images";
 	public boolean blogInfoUpdate(BlogVo blogVo, MultipartFile multipartFile, UserVo authUser,  HttpServletRequest request) {

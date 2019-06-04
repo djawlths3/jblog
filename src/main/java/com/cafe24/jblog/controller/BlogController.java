@@ -100,8 +100,6 @@ public class BlogController {
 	@RequestMapping( value="/write" , method=RequestMethod.POST )
 	public String adminWrite(@ModelAttribute PostVo postVo, Model model, HttpSession session, @PathVariable String id ) {
 		blogService.postAdd(postVo);
-		
-		//return "blog/blog-admin-write";
 		return "redirect:/"+id+"/main";
 	}
 	

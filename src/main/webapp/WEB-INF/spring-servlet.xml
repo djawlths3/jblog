@@ -69,7 +69,7 @@
 	<!-- 빈설정을 annotation으로 하겠다.(@Controller에 auto scanning) -->
 	<context:annotation-config />
 	<!-- Controller Scanning 하는 base package 지정 -->
-	<context:component-scan base-package="com.cafe24.jblog.controller, com.cafe24.jblog.exception" />
+	<context:component-scan base-package="com.cafe24.jblog.controller" />
 
 	<!-- Interceptors -->
 	<mvc:interceptors>
