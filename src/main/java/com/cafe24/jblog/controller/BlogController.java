@@ -35,7 +35,7 @@ public class BlogController {
 	
 	@Auth
 	@RequestMapping( "/basic" )
-	public String adminBasic(Model model, @PathVariable String id) {
+	public String blogBasic(Model model, @PathVariable String id) {
 		BlogVo blogVo = blogService.getBlogInfo(id);
 		model.addAttribute("blogInfo", blogVo);
 		return "blog/blog-admin-basic";
@@ -43,7 +43,7 @@ public class BlogController {
 	
 	@Auth
 	@RequestMapping( "/basicUpload" )
-	public String adminBasicUpload(@ModelAttribute BlogVo blogVo, 
+	public String blogBasicUpload(@ModelAttribute BlogVo blogVo, 
 			@RequestParam(value="logoFile") MultipartFile multipartFile,
 			HttpServletRequest request,
 			@PathVariable String id,
@@ -56,7 +56,7 @@ public class BlogController {
 	
 	@Auth
 	@RequestMapping( "/category" )
-	public String adminCategoryGetList(Model model, HttpSession session, @PathVariable String id) {
+	public String blogCategoryGetList(Model model, HttpSession session, @PathVariable String id) {
 		UserVo userVo = (UserVo) session.getAttribute("authUser");
 		BlogVo blogVo = blogService.getBlogInfo(id);
 		List li = blogService.getList(userVo);
@@ -68,7 +68,7 @@ public class BlogController {
 	
 	@ResponseBody
 	@RequestMapping( value="/category" , method=RequestMethod.POST  )
-	public JSONResult adminCategoryDelete(@RequestParam(value="no", required=true, defaultValue="") Long no) {
+	public JSONResult blogCategoryDelete(@RequestParam(value="no", required=true, defaultValue="") Long no) {
 		blogService.categoryDelete(no);
 		JSONResult result = JSONResult.success(true);	
 		return result;
@@ -76,7 +76,7 @@ public class BlogController {
 	
 	@ResponseBody
 	@RequestMapping( value="/category/add" , method=RequestMethod.POST  )
-	public JSONResult adminCategory(@RequestParam(value="name", required=true, defaultValue="") String name,
+	public JSONResult blogCategory(@RequestParam(value="name", required=true, defaultValue="") String name,
 			@RequestParam(value="explanation", required=true, defaultValue="") String explanation, HttpSession session) {
 		
 		CategoryVo categoryVo = new CategoryVo(name, explanation, (UserVo) session.getAttribute("authUser"));
@@ -87,7 +87,7 @@ public class BlogController {
 	
 	@Auth
 	@RequestMapping( "/write" )
-	public String adminWrite(Model model, HttpSession session, @PathVariable String id) {
+	public String blogWrite(Model model, HttpSession session, @PathVariable String id) {
 		UserVo userVo = (UserVo) session.getAttribute("authUser");
 		List li = blogService.getList(userVo);
 		BlogVo blogVo = blogService.getBlogInfo(id);
@@ -98,14 +98,14 @@ public class BlogController {
 	}
 	
 	@RequestMapping( value="/write" , method=RequestMethod.POST )
-	public String adminWrite(@ModelAttribute PostVo postVo, Model model, HttpSession session, @PathVariable String id ) {
+	public String blogWrite(@ModelAttribute PostVo postVo, Model model, HttpSession session, @PathVariable String id ) {
 		blogService.postAdd(postVo);
 		return "redirect:/"+id+"/main";
 	}
 	
 
 	@RequestMapping({"","/main","/","/{pathNo1}/","/{pathNo1}/{pathNo2}","/{pathNo1}/{pathNo2}/","/{pathNo1}"})
-	public String adminMain(@PathVariable String id,
+	public String blogMain(@PathVariable String id,
 	         @PathVariable Optional<Long> pathNo1,
 	         @PathVariable Optional<Long> pathNo2,
 	         Model model) {
